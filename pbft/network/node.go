@@ -17,7 +17,7 @@ type Node struct {
 	MyInfo          *NodeInfo
 	PrivKey         *ecdsa.PrivateKey
 	NodeTable       []*NodeInfo
-	SeedNodeTables	[20][]*NodeInfo
+	SeedNodeTables	[][]*NodeInfo
 	View            *View
 	EpochID			int64
 	
@@ -93,7 +93,7 @@ const CoolingTotalErrMsg = 30
 // Number of outbound connection for a node.
 const MaxOutboundConnection = 3000
 
-func NewNode(myInfo *NodeInfo, nodeTable []*NodeInfo, seedNodeTables [20][]*NodeInfo,
+func NewNode(myInfo *NodeInfo, nodeTable []*NodeInfo, seedNodeTables [][]*NodeInfo,
 			viewID int64, decodePrivKey *ecdsa.PrivateKey) *Node {
 	node := &Node{
 		MyInfo:    myInfo,

@@ -22,7 +22,7 @@ type Server struct {
 	node *Node
 }
  
-func NewServer(nodeID string, nodeTable []*NodeInfo, seedNodeTables [20][]*NodeInfo,
+func NewServer(nodeID string, nodeTable []*NodeInfo, seedNodeTables [][]*NodeInfo,
 			viewID int64, decodePrivKey *ecdsa.PrivateKey) *Server {
 	nodeIdx := int(-1)
 	for idx, nodeInfo := range nodeTable {

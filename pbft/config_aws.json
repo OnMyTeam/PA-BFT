@@ -1,0 +1,72 @@
+{
+    "instanceIpList":
+    [
+        {"ip":"ec2-54-180-106-215.ap-northeast-2.compute.amazonaws.com"},
+        {"ip":"ec2-52-78-3-42.ap-northeast-2.compute.amazonaws.com"},
+        {"ip":"ec2-52-196-100-152.ap-northeast-1.compute.amazonaws.com"},
+        {"ip":"ec2-3-1-195-133.ap-southeast-1.compute.amazonaws.com"},
+        {"ip":"ec2-35-172-135-201.compute-1.amazonaws.com"},
+        {"ip":"ec2-13-52-61-109.us-west-1.compute.amazonaws.com"},
+        {"ip":"ec2-13-55-38-10.ap-southeast-2.compute.amazonaws.com"},
+        {"ip":"ec2-35-183-208-205.ca-central-1.compute.amazonaws.com"}
+    ],
+    "instanceInfos":
+    [
+        {
+            "totalNodeNum": 13,
+            "perInstanceNum":
+            [
+                {"NumOfNode":1},
+                {"NumOfNode":1},
+                {"NumOfNode":2},
+                {"NumOfNode":2},
+                {"NumOfNode":2},
+                {"NumOfNode":2},
+                {"NumOfNode":2},
+                {"NumOfNode":1}
+            ]
+        },
+        {
+            "totalNodeNum": 19,
+            "perInstanceNum":
+            [
+                {"NumOfNode":1},
+                {"NumOfNode":2},
+                {"NumOfNode":3},
+                {"NumOfNode":3},
+                {"NumOfNode":3},
+                {"NumOfNode":3},
+                {"NumOfNode":2},
+                {"NumOfNode":2}
+            ]
+        },
+        {
+            "totalNodeNum": 25,
+            "perInstanceNum":
+            [
+                {"NumOfNode":1},
+                {"NumOfNode":3},
+                {"NumOfNode":4},
+                {"NumOfNode":4},
+                {"NumOfNode":4},
+                {"NumOfNode":3},
+                {"NumOfNode":3},
+                {"NumOfNode":3}
+            ]
+        },
+        {
+            "totalNodeNum": 31,
+            "perInstanceNum":
+            [
+                {"NumOfNode":1},
+                {"NumOfNode":4},
+                {"NumOfNode":5},
+                {"NumOfNode":5},
+                {"NumOfNode":4},
+                {"NumOfNode":4},
+                {"NumOfNode":4},
+                {"NumOfNode":4}
+            ]
+        }
+    ]
+}
