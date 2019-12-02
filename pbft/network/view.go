@@ -206,7 +206,7 @@ func (node *Node) GetNewView(newviewMsg *consensus.NewViewMsg) {
 
 	if newviewMsg.SequenceID % 10 == 0 {
 	//	node.VCStates = make(map[int64]*consensus.VCState)
-		node.NextCandidateIdx = 10
+		node.NextCandidateIdx = 7
 	}
 
 	node.StartThreadIfNotExists(newviewMsg.SequenceID)
@@ -265,7 +265,7 @@ func (node *Node) FillHole(newviewMsg *consensus.NewViewMsg) {
 		prepare.SequenceID = newSequenceID
 		prepare.ViewID = int64(0)
 		prepare.Digest = ""
-		prepare.EpochID = newSequenceID / 10
+		prepare.EpochID = newSequenceID / int64(len(node.NodeTable))
 		prepare.NodeID = ""
 
 

@@ -11,8 +11,9 @@ type PBFT interface {
 	*/
 	//StartConsensus(request *RequestMsg, sequenceID int64) (*PrepareMsg, error)
 	Prepare(prepareMsg *PrepareMsg, requestMsg *RequestMsg) (VoteMsg, error)
-	Vote(voteMsg *VoteMsg) (CollateMsg, error)
+	Vote(voteMsg *VoteMsg, totNodes int64) (CollateMsg, error)
 	VoteAQ(TotalNode int32) (CollateMsg, error)
+	CollateAQ(TotalNode int32) (CollateMsg, error)
 	Collate(collateMsg *CollateMsg) (CollateMsg, error)
 
 	SetBizantine(nodeID string) bool

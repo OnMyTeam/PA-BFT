@@ -8,6 +8,7 @@ import (
 	"math/big"
 	"crypto/ecdsa"
 	"crypto/rand"
+	// mrand "math/rand"
 )
 
 func Hash(content []byte) string {

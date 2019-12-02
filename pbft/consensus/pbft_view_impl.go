@@ -65,7 +65,7 @@ func (vcs *VCState) ViewChange(viewchangeMsg *ViewChangeMsg) (*NewViewMsg, error
 	// Append VIEW-CHANGE message to its logs.
 	vcs.ViewChangeMsgLogs.ViewChangeMsgMutex.Lock()
         if _, ok := vcs.ViewChangeMsgLogs.ViewChangeMsgs[viewchangeMsg.NodeID]; ok {
-                fmt.Printf("View-change message from %s is already received, sequenceID=%d\n",
+                fmt.Printf("View-change message from %s is already received, NextCandidateIdx=%d\n",
                            viewchangeMsg.NodeID, vcs.NextCandidateIdx)
 		vcs.ViewChangeMsgLogs.ViewChangeMsgMutex.Unlock()
                 return nil, nil
