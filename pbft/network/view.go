@@ -67,9 +67,11 @@ func (node *Node) GetViewChange(viewchangeMsg *consensus.ViewChangeMsg) {
 
 			state, _ := node.getState(i)
 			
-			ch := state.GetMsgExitSendChannel()
-			if ch != nil {
-				ch <- 0
+			if state != nil {
+				ch := state.GetMsgExitSendChannel()
+				if ch != nil {
+					ch <- 0
+				}
 			}
 			if node.CommittedMsgs[i] != nil {
 				delete(node.CommittedMsgs, i)
@@ -127,9 +129,11 @@ func (node *Node) GetNewView(newviewMsg *consensus.NewViewMsg) {
 		
 		state, _ := node.getState(i)
 		
-		ch := state.GetMsgExitSendChannel()
-		if ch != nil {
-			ch <- 0
+		if state != nil {
+			ch := state.GetMsgExitSendChannel()
+			if ch != nil {
+				ch <- 0
+			}
 		}
 		if node.CommittedMsgs[i] != nil {
 			delete(node.CommittedMsgs, i)

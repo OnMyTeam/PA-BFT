@@ -215,7 +215,7 @@ func (node *Node) startTransitionWithDeadline(seqID int64, state consensus.PBFT)
 				phase:=consensus.NumOfPhase(phaseName)
 				timerArr[phase] = time.NewTimer(time.Millisecond*sigma[phase])
 				cancelCh[phase] = make(chan struct {})
-				// fmt.Printf("[Seq %d Thread] Start %s Timer\n", seqID, phaseName)
+				fmt.Printf("[Seq %d Thread] Start %s Timer\n", seqID, phaseName)
 				go func(phase int64, phaseName string) {
 					select {
 					case <-timerArr[phase].C: //when timer is done
@@ -653,9 +653,9 @@ func (node *Node) executeMsg() {
 				//fmt.Println("[ECPREPARETIME],",node.StableCheckPoint,",",time.Since(node.States[node.StableCheckPoint].GetReceivePrepareTime()))
 				//fmt.Println("[ECREQUESTTIME],", time.Since(time.Unix(0, node.States[node.StableCheckPoint].GetReqMsg().Timestamp)))
 				ch := node.States[node.StableCheckPoint].GetMsgExitSendChannel()
-				// ch1 := node.States[node.StableCheckPoint].GetMsgExitSendChannel1()
+				ch1 := node.States[node.StableCheckPoint].GetMsgExitSendChannel1()
 				ch <- 0
-				// ch1 <- 0
+				ch1 <- 0
 			} else {
 				//fmt.Println("[EXECUTE TIME] PREPARE : NULL Message came in!")
 				//fmt.Println("[EXECUTE TIME] REQUEST : NULL Message Came in!")
