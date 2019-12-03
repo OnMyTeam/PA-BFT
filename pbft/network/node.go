@@ -160,10 +160,10 @@ func (node *Node) Broadcast(msg interface{}, path string) {
 func (node *Node) startTransitionWithDeadline(seqID int64, state consensus.PBFT) {
 
 	var sigma	[4]time.Duration
-	sigma[consensus.NumOfPhase("Prepare")] = 700
+	sigma[consensus.NumOfPhase("Prepare")] = 800
 	sigma[consensus.NumOfPhase("Vote")] = 500
 	sigma[consensus.NumOfPhase("Collate")] = 500
-	sigma[consensus.NumOfPhase("ViewChange")] = 2000
+	sigma[consensus.NumOfPhase("ViewChange")] = 3000
 
 	var timerArr			[4]*time.Timer
 	var cancelCh			[4]chan struct {}
