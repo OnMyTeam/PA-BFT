@@ -531,7 +531,7 @@ func (node *Node) GetCollate(state consensus.PBFT, collateMsg *consensus.Collate
 
 	switch collateMsg.MsgType {
 		// Stop vote phase and start collate phase if it is not committed
-			case consensus.UNCOMMITTED:
+		case consensus.UNCOMMITTED:
 				
 				state.FillHoleVoteMsgs(collateMsg)
 				newCollateMsg, err := state.Collate(collateMsg)
@@ -566,7 +566,15 @@ func (node *Node) GetCollate(state consensus.PBFT, collateMsg *consensus.Collate
 					if node.Committed[newCollateMsg.SequenceID] == 0 {
 						fmt.Println("========= Collate UNCOMMITED ==> Collate COMMITED ==============",newCollateMsg.SequenceID)
 						// node.Broadcast(newCollateMsg, "/collate")
-						node.MsgExecution <- state.GetPrepareMsg()
+						if state.GetPrepareMsg() == nil {
+							for _, vote := range newCollateMsg.ReceivedVoteMsg {
+								node.MsgExecution <- vote.PrepareMsg
+								log.Println("vote.PrepareMsg: ",vote.PrepareMsg)
+								break
+							}
+						} else {
+							node.MsgExecution <- state.GetPrepareMsg()
+						}
 						state.GetTimerStopSendChannel() <- "Collate"
 						
 					}		
@@ -599,7 +607,15 @@ func (node *Node) GetCollate(state consensus.PBFT, collateMsg *consensus.Collate
 				if node.Committed[newCollateMsg.SequenceID] == 0 {
 					fmt.Println("========= Collate COMMITED ============== ",newCollateMsg.SequenceID)
 					// node.Broadcast(newCollateMsg, "/collate")
-					node.MsgExecution <- state.GetPrepareMsg()
+					if state.GetPrepareMsg() == nil {
+						for _, vote := range newCollateMsg.ReceivedVoteMsg {
+							node.MsgExecution <- vote.PrepareMsg
+							log.Println("vote.PrepareMsg: ",vote.PrepareMsg)
+							break
+						}
+					} else {
+						node.MsgExecution <- state.GetPrepareMsg()
+					}
 					state.GetTimerStopSendChannel() <- "Collate"
 					
 				}		
