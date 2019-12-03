@@ -1,14 +1,14 @@
 {
     "instanceIpList":
     [
-        {"ip":"ec2-54-180-106-215.ap-northeast-2.compute.amazonaws.com"},
-        {"ip":"ec2-52-78-3-42.ap-northeast-2.compute.amazonaws.com"},
-        {"ip":"ec2-52-196-100-152.ap-northeast-1.compute.amazonaws.com"},
-        {"ip":"ec2-3-1-195-133.ap-southeast-1.compute.amazonaws.com"},
-        {"ip":"ec2-35-172-135-201.compute-1.amazonaws.com"},
-        {"ip":"ec2-13-52-61-109.us-west-1.compute.amazonaws.com"},
-        {"ip":"ec2-13-55-38-10.ap-southeast-2.compute.amazonaws.com"},
-        {"ip":"ec2-35-183-208-205.ca-central-1.compute.amazonaws.com"}
+        {"ip":"ec2-15-164-251-225.ap-northeast-2.compute.amazonaws.com"},
+        {"ip":"ec2-13-125-237-56.ap-northeast-2.compute.amazonaws.com"},
+        {"ip":"ec2-52-69-125-132.ap-northeast-1.compute.amazonaws.com"},
+        {"ip":"ec2-13-229-206-191.ap-southeast-1.compute.amazonaws.com"},
+        {"ip":"ec2-18-206-254-59.compute-1.amazonaws.com"},
+        {"ip":"ec2-13-52-246-234.us-west-1.compute.amazonaws.com"},
+        {"ip":"ec2-54-153-209-242.ap-southeast-2.compute.amazonaws.com"},
+        {"ip":"ec2-35-182-237-63.ca-central-1.compute.amazonaws.com"}
     ],
     "instanceInfos":
     [
@@ -31,10 +31,10 @@
             "perInstanceNum":
             [
                 {"NumOfNode":1},
+                {"NumOfNode":3},
+                {"NumOfNode":3},
+                {"NumOfNode":3},
                 {"NumOfNode":2},
-                {"NumOfNode":3},
-                {"NumOfNode":3},
-                {"NumOfNode":3},
                 {"NumOfNode":3},
                 {"NumOfNode":2},
                 {"NumOfNode":2}

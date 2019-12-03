@@ -417,7 +417,7 @@ func (state *State) GetSentVoteMsgs() *VoteMsg {
 }
 func (state *State) FillHoleVoteMsgs(collateMsg *CollateMsg) {
 	var newTotalVoteOKMsg int32
-	state.MsgLogs.VoteMsgsMutex.RLock()
+	//state.MsgLogs.VoteMsgsMutex.RLock()
 	for NodeID, VoteMsg := range state.GetVoteMsgs() {
 			if  VoteMsg == collateMsg.ReceivedVoteMsg[NodeID] || collateMsg.ReceivedVoteMsg[NodeID] == nil {
 				// fmt.Println("Already Save VoteMsg ", NodeID)
@@ -431,7 +431,7 @@ func (state *State) FillHoleVoteMsgs(collateMsg *CollateMsg) {
 			}			
 	}
 	fmt.Println("Total VoteOKMsg : ", newTotalVoteOKMsg)
-	state.MsgLogs.VoteMsgsMutex.RUnlock()
+	//state.MsgLogs.VoteMsgsMutex.RUnlock()
 }
 
 func (state *State) verifyMsg(viewID int64, sequenceID int64, digestGot string) error {

@@ -124,7 +124,7 @@ func (server *Server) receiveLoop(cc *websocket.Conn, path string, nodeInfo *Nod
 		if ok == false {
 			fmt.Println("[receiveLoop-error] decoding error")
 		}
-		time.Sleep(time.Millisecond * 80)
+		time.Sleep(time.Millisecond * 150)
 		switch rawMsg.MsgType {
 		case "/prepare":
 			// ReqPrePareMsgs have RequestMsg and PrepareMsg
@@ -134,7 +134,7 @@ func (server *Server) receiveLoop(cc *websocket.Conn, path string, nodeInfo *Nod
 				fmt.Println("[receiveLoop-error] seq 0 came in")
 				continue
 			}
-			// fmt.Println("[EndPrepare] to:",server.node.MyInfo.NodeID,"from:",msg.PrepareMsg.NodeID, "/",time.Now().UnixNano())
+			fmt.Println("[EndPrepare] to:",server.node.MyInfo.NodeID,"from:",msg.PrepareMsg.NodeID, "/",time.Now().UnixNano())
 			server.node.MsgEntrance <- &msg
 		case "/vote":
 			var msg consensus.VoteMsg

@@ -160,10 +160,10 @@ func (node *Node) Broadcast(msg interface{}, path string) {
 func (node *Node) startTransitionWithDeadline(seqID int64, state consensus.PBFT) {
 
 	var sigma	[4]time.Duration
-	sigma[consensus.NumOfPhase("Prepare")] = 800
-	sigma[consensus.NumOfPhase("Vote")] = 500
-	sigma[consensus.NumOfPhase("Collate")] = 500
-	sigma[consensus.NumOfPhase("ViewChange")] = 3000
+	sigma[consensus.NumOfPhase("Prepare")] = 20000
+	sigma[consensus.NumOfPhase("Vote")] = 20000
+	sigma[consensus.NumOfPhase("Collate")] = 20000
+	sigma[consensus.NumOfPhase("ViewChange")] = 20000
 
 	var timerArr			[4]*time.Timer
 	var cancelCh			[4]chan struct {}
@@ -396,7 +396,7 @@ func (node *Node) BroadCastNextPrepareMsgIfPrimary(sequenceID int64){
 		node.MyInfo.NodeID, sequenceID, node.EpochID, node.View.ID)
 
 	fmt.Println("[StartPrepare]", "seqID / ",sequenceID,"/", time.Now().UnixNano())
-	time.Sleep(time.Millisecond * 40)
+	time.Sleep(time.Millisecond * 100)
 	node.Broadcast(prepareMsg, "/prepare")
 	fmt.Println("[StartPrepare] After Broadcast!")
 	//broadcast(errCh, node.MyInfo.Url, dummy, "/prepare", node.PrivKey)
@@ -506,7 +506,7 @@ func (node *Node) GetVote(state consensus.PBFT, voteMsg *consensus.VoteMsg) {
 		collateMsg.NodeID = node.MyInfo.NodeID
 		node.Broadcast(collateMsg, "/collate")
 		state.GetTimerStopSendChannel() <- "Vote"
-		//state.GetTimerStartSendChannel() <- "Collate"
+		state.GetTimerStartSendChannel() <- "Collate"
 		// Log last sequence id for checkpointing
 	case consensus.UNCOMMITTED:
 		state.GetTimerStopSendChannel() <- "Vote"
@@ -658,7 +658,7 @@ func (node *Node) StartThreadIfNotExists(seqID int64) consensus.PBFT {
 		newTotalConsensus := atomic.AddInt64(&node.TotalConsensus, 1)
 		fmt.Printf("Consensus Process.. newTotalConsensus num is %d\n", newTotalConsensus)	
 		node.startTransitionWithDeadline(seqID, state)
-		state.GetTimerStartSendChannel() <- "ViewChange"
+		//state.GetTimerStartSendChannel() <- "ViewChange"
 		state.GetTimerStartSendChannel() <- "Prepare"
 		//state.GetTimerStartSendChannel() <- "Total"
 		
@@ -787,12 +787,12 @@ func (node *Node) executeMsg() {
 				break
 			}
 
-			node.States[prepareMsg.SequenceID].GetTimerStopSendChannel() <- "ViewChange"
+			node.States[p.SequenceID].GetTimerStopSendChannel() <- "ViewChange"
 
 			fmt.Println("[Execute] /", lastSequenceID + 1,"/", time.Now().UnixNano())
 			// Add the committed message in a private log queue
 			// to print the orderly executed messages.
-			node.CommittedMsgs[int64(lastSequenceID + 1)] = prepareMsg
+			node.CommittedMsgs[int64(lastSequenceID + 1)] = p
 			atomic.AddInt64(&node.Committed[int64(lastSequenceID + 1)], 1)
 			//fmt.Println("[STAGE-DONE] Commit SequenceID : ",lastSequenceID + 1)
 			node.StableCheckPoint = lastSequenceID + 1
@@ -805,7 +805,7 @@ func (node *Node) executeMsg() {
 
 			node.StatesMutex.Unlock()
 			// TODO: execute appropriate operation.
-
+			
 			delete(pairs, lastSequenceID + 1)
 			// fmt.Println("[Execute] sequenceID:",lastSequenceID + 1,",",time.Now().UnixNano())
 			// // Add the committed message in a private log queue
