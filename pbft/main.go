@@ -21,7 +21,7 @@ func main() {
 		fmt.Println("Usage:", os.Args[0], "<nodeID> <TOTALNUM> [node.list]")
 		return
 	}
-	nodeID := os.Args[1] 
+	nodeID := os.Args[1]
 
 	// Generate NodeTable
 	nodeTable:=GenNodeTable(os.Args[3])
