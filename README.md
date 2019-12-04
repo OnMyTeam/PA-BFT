@@ -3,7 +3,7 @@
 ## PBFT
 ### Architecture
 #### Overall behavior (4 peers)
-![](./pbft-consensus-behavior.jpg)
+![](./timer.jpg)
 Definitions of each abbreviation in the diagram are;
 
 * `m`: Request message object
@@ -23,10 +23,13 @@ Every node replies the result of the request's operation to the client individua
 In this sample implementation, there is no client. So, every node including the primary will return its reply message to the primary.
 
 #### Code structure of the implementation
-![](./pbft-consensus-architecture.png)
+![](./aqua.jpg)
 
 ### Working Screenshot
-![](./working-screenshot.png)
+![](./flow.jpg)
+
+### Working Screenshot
+![](./ppe.jpg)
 
 ## License
 Apache 2.0
