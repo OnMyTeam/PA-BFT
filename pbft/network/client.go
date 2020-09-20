@@ -49,27 +49,28 @@ type Client struct {
 // The application runs readPump in a per-connection goroutine. The application
 // ensures that there is at most one reader on a connection by executing all
 // reads from this goroutine.
-func (c *Client) readPump() {
-	defer func() {
-		c.hub.unregister <- c
-		c.conn.Close()
-	}()
-	c.conn.SetReadLimit(maxMessageSize)
-	c.conn.SetReadDeadline(time.Now().Add(pongWait))
-	c.conn.SetPongHandler(func(string) error { c.conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
-	for {
-		_, message, err := c.conn.ReadMessage()
-		if err != nil {
-			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				log.Printf("error: %v", err)
-			}
-			break
-		}
-		//log.Println("RECV:", message)
-		c.hub.broadcast <- message
-	}
-}
-
+// func (c *Client) readPump(server *Server) {
+// 	defer func() {
+// 		c.hub.unregister <- c
+// 		c.conn.Close()
+// 	}()
+// 	c.conn.SetReadLimit(maxMessageSize)
+// 	c.conn.SetReadDeadline(time.Now().Add(pongWait))
+// 	c.conn.SetPongHandler(func(string) error { c.conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
+// 	for {
+// 		_, message, err := c.conn.ReadMessage()
+// 		if err != nil {
+// 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+// 				log.Printf("error: %v", err)
+// 			}
+// 			break
+// 		}
+// 		server.receiveMsg(message)
+		
+// 		log.Println("RECV:", message)
+// 		c.hub.broadcast <- message
+// 	}
+// }
 // writePump pumps messages from the hub to the websocket connection.
 //
 // A goroutine running writePump is started for each connection. The
@@ -124,11 +125,11 @@ func ServeWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//client := &Client{hub: hub, conn: conn, send: make(chan []byte, 256)}
-	client := &Client{hub: hub, conn: conn, send: make(chan []byte, 512)}
+	client := &Client{hub: hub, conn: conn, send: make(chan []byte, 2048)}
 	client.hub.register <- client
 
 	// Allow collection of memory referenced by the caller by doing all work in
 	// new goroutines.
 	go client.writePump()
-	go client.readPump()
+	// go client.readPump()
 }

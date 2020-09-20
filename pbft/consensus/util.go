@@ -8,7 +8,6 @@ import (
 	"math/big"
 	"crypto/ecdsa"
 	"crypto/rand"
-	// mrand "math/rand"
 )
 
 func Hash(content []byte) string {
@@ -58,8 +57,6 @@ func NumOfPhase(s string) int64 {
 		return 2
 	case "ViewChange":
 		return 3
-	case "Total":
-		return 4
-	}	
+	}
 	return -1
 }

@@ -1,9 +1,9 @@
 package network
 
 import (
+	consensus "consensus"
 	"fmt"
 	"time"
-	"github.com/bigpicturelabs/consensusPBFT/pbft/consensus"
 )
 
 func LogMsg(msg interface{}) {

@@ -5,12 +5,12 @@
 package network
 
 // Hub maintains the set of active clients and broadcasts messages to the
-// clients. 
+// clients.
 type Hub struct {
 	// Registered clients.
 	clients map[*Client]bool
 
-	// Inbound messages from the clients.
+	// Iytbound messages to the clients.
 	broadcast chan []byte
 
 	// Register requests from the clients.
@@ -22,7 +22,7 @@ type Hub struct {
 
 func NewHub() *Hub {
 	return &Hub{
-		broadcast:  make(chan []byte),
+		broadcast:  make(chan []byte, 20000000),
 		register:   make(chan *Client),
 		unregister: make(chan *Client),
 		clients:    make(map[*Client]bool),
@@ -41,12 +41,7 @@ func (h *Hub) run() {
 			}
 		case message := <-h.broadcast:
 			for client := range h.clients {
-				select {
-				case client.send <- message:
-				default:
-					close(client.send)
-					delete(h.clients, client)
-				}
+				client.send <- message
 			}
 		}
 	}

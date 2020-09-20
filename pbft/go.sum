@@ -1,0 +1,4 @@
+github.com/bigpicturelabs/consensusPBFT v0.0.0-20180201143812-e6afd3e97f57 h1:jj4Gjg5aZFzgm4dhi8/I9oG+uUDKHXY84yXLEUJZmrk=
+github.com/bigpicturelabs/consensusPBFT v0.0.0-20180201143812-e6afd3e97f57/go.mod h1:kFJXZs2IamjcHrmnc9JC0bSKgfzEpTGPW9LnGVyN8AU=
+github.com/gorilla/websocket v1.4.2 h1:+/TMaTYc4QFitKJxsQ7Yye35DkWvkdLcvGKqM+x0Ufc=
+github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=

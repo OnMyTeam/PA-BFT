@@ -6,23 +6,19 @@ import(
 	"fmt"
 	"sync"
 	"sync/atomic"
-	"time"
 )
 
 type VCState struct {
-	NextCandidateIdx  	int64
+	NextViewID         	int64
 	ViewChangeMsgLogs   *ViewChangeMsgLogs
 	NewViewMsg			*NewViewMsg
 	NodeID		   		string
 	StableCheckPoint 	int64
-	SequenceID			int64
 
 	// f: the number of Byzantine faulty nodes
 	// f = (n-1) / 3
 	// e.g., n = 5, f = 1
 	f int
-
-	ReceivedViewchangeTime time.Time
 }
 
 type ViewChangeMsgLogs struct {
@@ -36,15 +32,13 @@ type ViewChangeMsgLogs struct {
 	msgSent   int32 // atomic bool
 }
 
-func CreateViewChangeState(nodeID string, totNodes int, nextcandidateIdx int64, stablecheckpoint int64, sequenceID int64) *VCState {
+func CreateViewChangeState(nodeID string, totNodes int, nextviewID int64, stablecheckpoint int64) *VCState {
 	return &VCState{
-		NextCandidateIdx: nextcandidateIdx,
-		SequenceID: sequenceID,
+		NextViewID: nextviewID,
 		ViewChangeMsgLogs: &ViewChangeMsgLogs{
 			ViewChangeMsgs:make(map[string]*ViewChangeMsg),
 			TotalViewChangeMsg: 0,
 			msgSent: 0,
-	
 		},
 		NewViewMsg: nil,
 		NodeID: nodeID,
@@ -61,12 +55,11 @@ func (vcs *VCState) ViewChange(viewchangeMsg *ViewChangeMsg) (*NewViewMsg, error
 	//	return nil, errors.New("view-change message is corrupted: " + err.Error() + " (nextviewID " + fmt.Sprintf("%d", viewchangeMsg.NextViewID) + ")")
 	//}
 
-	
 	// Append VIEW-CHANGE message to its logs.
 	vcs.ViewChangeMsgLogs.ViewChangeMsgMutex.Lock()
         if _, ok := vcs.ViewChangeMsgLogs.ViewChangeMsgs[viewchangeMsg.NodeID]; ok {
-                fmt.Printf("View-change message from %s is already received, NextCandidateIdx=%d\n",
-                           viewchangeMsg.NodeID, vcs.NextCandidateIdx)
+                fmt.Printf("View-change message from %s is already received, next view number=%d\n",
+                           viewchangeMsg.NodeID, vcs.NextViewID)
 		vcs.ViewChangeMsgLogs.ViewChangeMsgMutex.Unlock()
                 return nil, nil
         }
@@ -74,9 +67,6 @@ func (vcs *VCState) ViewChange(viewchangeMsg *ViewChangeMsg) (*NewViewMsg, error
 	vcs.ViewChangeMsgLogs.ViewChangeMsgMutex.Unlock()
 	newTotalViewchangeMsg := atomic.AddInt32(&vcs.ViewChangeMsgLogs.TotalViewChangeMsg, 1)
 
-	if int64(newTotalViewchangeMsg) == int64(vcs.f + 1) {
-		vcs.SetReceiveViewchangeTime(time.Now())
-	}
 	// Print current voting status.
 	fmt.Printf("[View-Change-Vote]: %d\n", newTotalViewchangeMsg)
 
@@ -85,12 +75,10 @@ func (vcs *VCState) ViewChange(viewchangeMsg *ViewChangeMsg) (*NewViewMsg, error
 	if int(newTotalViewchangeMsg) >= 2*vcs.f + 1 &&
 	   atomic.CompareAndSwapInt32(&vcs.ViewChangeMsgLogs.msgSent, 0, 1) {
 		return &NewViewMsg{
+			NextViewID: vcs.NextViewID,
 			NodeID: vcs.NodeID,
-			SequenceID: vcs.SequenceID,
-			NextCandidateIdx: vcs.NextCandidateIdx,
 			SetViewChangeMsgs: vcs.GetViewChangeMsgs(),
-			EpochID: 0,
-			//PrepareMsg: nil,
+			PrepareMsg: nil,
 			Min_S: 0,
 		}, nil
 	}
@@ -110,7 +98,7 @@ func (vcs *VCState) GetViewChangeMsgs() map[string]*ViewChangeMsg {
 	return newMap
 }
 
-func (vcs *VCState) verifyVCMsg(nodeID string, nextcandidateIdx int64, stableCheckPoint int64) error {
+func (vcs *VCState) verifyVCMsg(nodeID string, nextViewID int64, stableCheckPoint int64) error {
 	// Wrong view. That is, wrong configurations of peers to start the consensus.
 	// TODO vertify sender's signature
 
@@ -145,11 +133,3 @@ func (state *State) Redo_SetState(viewID int64, nodeID string, totNodes int, pre
 
 	return state
 }
-
-func (vcs *VCState) SetReceiveViewchangeTime(time time.Time) {
-	vcs.ReceivedViewchangeTime = time
-}
-
-func (vcs *VCState) GetReceiveViewchangeTime() time.Time {
-	return vcs.ReceivedViewchangeTime
- }

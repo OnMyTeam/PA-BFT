@@ -6,10 +6,11 @@ import (
 	"encoding/json"
 	"encoding/pem"
 	"fmt"
-	"github.com/bigpicturelabs/consensusPBFT/pbft/network"
 	"io/ioutil"
 	"log"
 	"os"
+
+	network "network"
 )
 
 // Hard-coded for test.
@@ -43,6 +44,7 @@ func main() {
 	if server != nil {
 		server.Start()
 	}
+	select {}
 }
 
 func AssertError(err error) {
@@ -77,7 +79,7 @@ func GenSeedNodeTables(nodeTable []*network.NodeInfo) [][]*network.NodeInfo{
 }
 func GenPublicKeys(nodeTable *[]*network.NodeInfo) {
 	for _, nodeInfo := range *nodeTable {
-		pubKeyFile := fmt.Sprintf("keys/%s.pub", nodeInfo.NodeID)
+		pubKeyFile := fmt.Sprintf("configfiles/keys/%s.pub", nodeInfo.NodeID)
 		pubBytes, err := ioutil.ReadFile(pubKeyFile)
 		AssertError(err)
 
@@ -86,7 +88,7 @@ func GenPublicKeys(nodeTable *[]*network.NodeInfo) {
 	}
 }
 func GenPrivateKeys(nodeID string) *ecdsa.PrivateKey {
-	privKeyFile := fmt.Sprintf("keys/%s.priv", nodeID)
+	privKeyFile := fmt.Sprintf("configfiles/keys/%s.priv", nodeID)
 	privbytes, err := ioutil.ReadFile(privKeyFile)
 	AssertError(err)
 	decodePrivKey := PrivateKeyDecode(privbytes)

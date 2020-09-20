@@ -1,0 +1,52 @@
+{
+    "instanceIpList":
+    [
+        {"ip":"ec2-54-180-175-90.ap-northeast-2.compute.amazonaws.com"},
+        {"ip":"ec2-54-254-206-46.ap-southeast-1.compute.amazonaws.com"},
+        {"ip":"ec2-3-211-78-42.compute-1.amazonaws.com"},
+        {"ip":"ec2-52-52-157-27.us-west-1.compute.amazonaws.com"}
+    ],
+    "instanceInfos":
+    [
+        {
+            "totalNodeNum": 13,
+            "perInstanceNum":
+            [
+                {"NumOfNode":3},
+                {"NumOfNode":3},
+                {"NumOfNode":3},
+                {"NumOfNode":4}
+            ]
+        },
+        {
+            "totalNodeNum": 19,
+            "perInstanceNum":
+            [
+                {"NumOfNode":4},
+                {"NumOfNode":5},
+                {"NumOfNode":5},
+                {"NumOfNode":5}
+            ]
+        },
+        {
+            "totalNodeNum": 25,
+            "perInstanceNum":
+            [
+                {"NumOfNode":6},
+                {"NumOfNode":6},
+                {"NumOfNode":6},
+                {"NumOfNode":7}
+            ]
+        },
+        {
+            "totalNodeNum": 31,
+            "perInstanceNum":
+            [
+                {"NumOfNode":8},
+                {"NumOfNode":8},
+                {"NumOfNode":8},
+                {"NumOfNode":7}
+            ]
+        }
+    ]
+}

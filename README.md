@@ -1,7 +1,7 @@
 # 블록체인 확장성 개선을 위한 위임형 비잔틴 합의 알고리즘
 
 ## <b>PA-BFT(Parallel and Adaptive BFT)
-![](./timer.jpg)
+![](./picture/timer.jpg)
 
 ## <b>Safety 및  Liveness
 #### Safety 
@@ -22,10 +22,10 @@
 &nbsp;&nbsp;&nbsp;- 위임인 숫자 n, 최대 오류 숫자 f, 비잔틴 오류 숫자 b<br>
 ⦁ (효과) PBFT의 5단계를 3단계로 단축<br>
 ⦁ (효과) 생기성 보장 및 비잔틴 오류에 대한 강인성<br><br>
-![](./aqua.jpg)
+![](./picture/aqua.jpg)
 
 ## <b>Status Diagram
-![](./flow.jpg)
+![](./picture/flow.jpg)
 
 ## <b>PPE (Pipelined Parallel Execution)
 ⦁ 낙관적·예측적(optimistic & speculative) 프로토콜 실행 기법<br>
@@ -34,7 +34,7 @@
 ⦁ (효과) 단위시간당 처리량 증가(처리시간에 무관)<br>
 ⦁ (효과) 타 합의 알고리즘에도 적용이 용이<br><br>
 
-![](./ppe.jpg)
+![](./picture/ppe.jpg)
 
 ## <b>License
 Apache 2.0
