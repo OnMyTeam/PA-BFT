@@ -1,6 +1,9 @@
 # 블록체인 확장성 개선을 위한 위임형 비잔틴 합의 알고리즘
 
 ## <b>PA-BFT(Parallel and Adaptive BFT)
+&nbsp;과제전담기관: 과학기술정보통신부<br>
+&nbsp;성능평가기관: 정보통신기술협회
+<br>
 ![](./timer.jpg)
 
 ## <b>Safety 및  Liveness
